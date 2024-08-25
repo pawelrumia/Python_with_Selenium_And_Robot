@@ -4,6 +4,7 @@ import allure
 from pages.LandingPage import LandingPage
 
 
+
 @pytest.mark.usefixtures("setup")
 class TestHomepage:
 

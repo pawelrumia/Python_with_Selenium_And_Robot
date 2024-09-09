@@ -1,9 +1,8 @@
 import pytest
 import allure
 
+from locators.locators import InternalPages
 from pages.LandingPage import LandingPage
-
-
 
 @pytest.mark.usefixtures("setup")
 class TestHomepage:
@@ -31,7 +30,7 @@ class TestHomepage:
         homepage.open_page()
         homepage.click_tab('checkboxes')
         assert ("Checkboxes" == homepage.get_page_title())
-        homepage.click_first_checkbox()
+        homepage.click_checkbox(InternalPages.checkbox1)
         assert LandingPage.verify_if_checkbox_is_checked(self.driver, 1) is True
         assert LandingPage.verify_if_checkbox_is_checked(self.driver, 2) is True
 
@@ -43,3 +42,14 @@ class TestHomepage:
         homepage.click_tab('context_menu')
         homepage.context_click_the_box()
         assert (homepage.switch_to_alert_and_get_text() == "You selected a context menu")
+        
+
+    @allure.title("Select value from dropdown test")
+    @allure.description("Select value from dropdown")
+    def test_select_dropdown_value_then_verify(self):
+        homepage = LandingPage(self.driver)
+        homepage.open_page()
+        homepage.click_tab('dropdown')
+        homepage.select_value_from_dropdown_by_text(InternalPages.dropdown, 'Option 2')
+        assert homepage.verify_attribute_of_element_exists("//select[@id='dropdown']/option[@value='2']", "selected")
+

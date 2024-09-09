@@ -1,15 +1,18 @@
 import allure
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+from selenium.webdriver.support.wait import WebDriverWait
+from locators.locators import InternalPages
+from pages.CommonMethods import CommonElementMethods
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import HomePageLocators, InternalPages
 
-
-class LandingPage:
+class LandingPage(CommonElementMethods):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
+
 
     @allure.step("Opening heroku training website")
     def open_page(self):
@@ -21,6 +24,11 @@ class LandingPage:
 
     def click_add_element_button(self):
         self.driver.find_element(*InternalPages.add_element_button).click()
+
+    def verify_attribute_of_element_exists(self, xpath, attribute):
+        searched_element = self.driver.find_element_by_xpath(xpath)
+        return searched_element.get_attribute(attribute) is not None
+
 
     def click_first_checkbox(self):
         (WebDriverWait(self.driver, 5, 2, (NoSuchElementException, StaleElementReferenceException))

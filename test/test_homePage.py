@@ -4,7 +4,6 @@ import allure
 from locators.locators import InternalPages
 from pages.LandingPage import LandingPage
 
-
 @pytest.mark.usefixtures("setup")
 class TestHomepage:
 
@@ -43,6 +42,7 @@ class TestHomepage:
         homepage.click_tab('context_menu')
         homepage.context_click_the_box()
         assert (homepage.switch_to_alert_and_get_text() == "You selected a context menu")
+        
 
     @allure.title("Select value from dropdown test")
     @allure.description("Select value from dropdown")
@@ -52,3 +52,4 @@ class TestHomepage:
         homepage.click_tab('dropdown')
         homepage.select_value_from_dropdown_by_text(InternalPages.dropdown, 'Option 2')
         assert homepage.verify_attribute_of_element_exists("//select[@id='dropdown']/option[@value='2']", "selected")
+

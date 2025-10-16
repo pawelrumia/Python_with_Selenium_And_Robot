@@ -1,6 +1,5 @@
 import pytest
 import allure
-
 from pages.LandingPage import LandingPage
 
 
@@ -8,11 +7,12 @@ from pages.LandingPage import LandingPage
 class TestHomepage:
 
     @allure.title("Home page - smoke test")
-    @allure.description("Check if home page of Demoblaze has correct title")
+    @allure.description("Check if home page of The Internet has correct title")
     def test_homepage_title(self):
         homepage = LandingPage(self.driver)
         homepage.open_page()
-        assert ("The Internet" == homepage.get_page_title())
+        assert homepage.get_page_title() == "The Internet", \
+            "❌ Page title is incorrect"
 
     @allure.title("Home page - after click")
     @allure.description("dwojeczka")

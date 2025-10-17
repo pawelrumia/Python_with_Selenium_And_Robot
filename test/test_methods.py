@@ -8,8 +8,8 @@ def test_sqrt():
 
 def test_square():
     num = 7
-    assert 7 * 7 == 40
+    assert 7 * 7 == 49
 
 
 def test_quality():
-    assert 10 == 11
+    assert 10 == 10

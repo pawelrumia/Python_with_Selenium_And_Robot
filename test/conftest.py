@@ -1,4 +1,7 @@
 import os
+import sys
+# Dodaj katalog główny projektu do sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import pytest
 import allure

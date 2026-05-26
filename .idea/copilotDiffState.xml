@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/requirements.txt">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/requirements.txt" />
+              <option name="originalContent" value="# === Test Framework ===&#10;pytest==8.3.3&#10;allure-pytest==2.13.5&#10;allure-python-commons==2.13.5&#10;robotframework&#10;robotframework-seleniumlibrary&#10;&#10;# === Selenium &amp; Browser ===&#10;selenium==4.25.0&#10;webdriver-manager==4.0.2&#10;&#10;# === Utils &amp; Helpers ===&#10;requests==2.32.3&#10;packaging==24.1&#10;pluggy==1.5.0&#10;py==1.11.0&#10;iniconfig==2.0.0&#10;attrs==24.2.0&#10;colorama==0.4.6&#10;configparser==7.1.0&#10;pyparsing==3.1.2&#10;&#10;# === Optional / File Handling ===&#10;xlrd==2.0.1&#10;&#10;# === Dependencies ===&#10;certifi==2024.8.30&#10;idna==3.10&#10;urllib3==2.2.3&#10;" />
+              <option name="updatedContent" value="# === Test Framework ===&#10;pytest==8.3.3&#10;allure-pytest==2.13.5&#10;allure-python-commons==2.13.5&#10;robotframework&#10;robotframework-seleniumlibrary&#10;&#10;# === Selenium &amp; Browser ===&#10;selenium==4.25.0&#10;webdriver-manager==4.0.2&#10;&#10;# === Utils &amp; Helpers ===&#10;requests==2.32.3&#10;packaging==24.1&#10;pluggy==1.5.0&#10;py==1.11.0&#10;iniconfig==2.0.0&#10;attrs==24.2.0&#10;colorama==0.4.6&#10;configparser==7.1.0&#10;pyparsing==3.1.2&#10;&#10;# === Optional / File Handling ===&#10;xlrd==2.0.1&#10;&#10;# === Dependencies ===&#10;certifi==2024.8.30&#10;idna==3.10&#10;urllib3==2.2.3" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/test/test_fixture.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/test/test_fixture.py" />
+              <option name="originalContent" value="import pytest&#10;&#10;&#10;@pytest.fixture&#10;def input_value():&#10;    # Provide a value divisible by both 3 and 6 for tests&#10;    return 12&#10;&#10;&#10;def test_divisible_by_3(input_value):&#10;    assert input_value % 3 == 0&#10;&#10;&#10;def test_divisible_by_6(input_value):&#10;    assert input_value % 6 == 0&#10;&#10;&#10;@pytest.mark.parametrize(&quot;number, result&quot;, [(1, 11), (2, 22), (3, 33)])&#10;def test_multiplication(number, result):&#10;    assert 11 * number == result&#10;" />
+              <option name="updatedContent" value="import pytest&#10;&#10;&#10;@pytest.fixture&#10;def input_value():&#10;    # Provide a value divisible by both 3 and 6 for tests&#10;    return 12&#10;&#10;&#10;def test_divisible_by_3(input_value):&#10;    assert input_value % 3 == 0&#10;&#10;&#10;def test_divisible_by_6(input_value):&#10;    assert input_value % 6 == 0&#10;&#10;&#10;@pytest.mark.parametrize(&quot;number, result&quot;, [(1, 11), (2, 22), (3, 33)])&#10;def test_multiplication(number, result):&#10;    assert 11 * number == result" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/test/test_methods.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/test/test_methods.py" />
+              <option name="originalContent" value="import math&#10;&#10;&#10;def test_sqrt():&#10;    num = 25&#10;    assert math.sqrt(num) == 5&#10;&#10;&#10;def test_square():&#10;    num = 7&#10;    assert 7 * 7 == 49&#10;&#10;&#10;def test_quality():&#10;    assert 10 == 10" />
+              <option name="updatedContent" value="import math&#10;&#10;&#10;def test_sqrt():&#10;    num = 25&#10;    assert math.sqrt(num) == 5&#10;&#10;&#10;def test_square():&#10;    num = 7&#10;    assert 7 * 7 == 49&#10;&#10;&#10;def test_quality():&#10;    assert 10 == 10" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

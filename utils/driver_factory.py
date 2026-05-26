@@ -1,21 +1,21 @@
 from selenium import webdriver
-from helpers.listener import WebDriverListener
-from extensions.webDriver_extension import WebDriverExtended
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 class DriverFactory:
     @staticmethod
-    def get_driver(config) -> WebDriverExtended:
-        if config["browser"] == "chrome":
-            options = webdriver.ChromeOptions()
-            options.add_argument("start-maximized")
-            if config["headless_mode"] is True:
-                options.add_argument("--headless")
-            driver = WebDriverExtended(
-                webdriver.Chrome(r"C:\Users\mazurp2\PycharmProjects\Python_with_Selenium_And_Robot\chromedriver.exe",
-                                 options=options),
-                WebDriverListener(), config
-            )
-            return driver
+    def get_driver(config):
+        browser = config.get("browser", "chrome").lower()
 
-        raise Exception("Provide valid driver name")
+        if browser == "chrome":
+            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        elif browser == "firefox":
+            driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+        else:
+            raise Exception(f"❌ Unsupported browser: {browser}")
+
+        driver.get(config.get("base_url"))
+        return driver

@@ -1,6 +1,12 @@
 import pytest
 
 
+@pytest.fixture
+def input_value():
+    # Provide a value divisible by both 3 and 6 for tests
+    return 12
+
+
 def test_divisible_by_3(input_value):
     assert input_value % 3 == 0
 

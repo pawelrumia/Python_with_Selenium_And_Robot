@@ -1,74 +1,46 @@
-import pytest
+import os
+import sys
+# Dodaj katalog główny projektu do sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
+import pytest
 import allure
 from allure_commons.types import AttachmentType
-from selenium.webdriver.chrome.options import Options
-
 from utils.driver_factory import DriverFactory
 
-CONFIG_PATH = r"C:\Users\mazurp2\PycharmProjects\Python_with_Selenium_And_Robot\config.json"
-DEFAULT_WAIT_TIME = 10
-SUPPORTED_BROWSERS = ["chrome", "firefox", "edge"]
-DEFAULT_URL = "https://the-internet.herokuapp.com/"
 
-
-@pytest.fixture(scope='session')
-def config():
-    config_file = open(CONFIG_PATH)
-    return json.load(config_file)
+# Ścieżka do config.json w katalogu głównym projektu
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
 
 
 @pytest.fixture(scope="session")
-def browser_setup(config):
-    if "browser" not in config:
-        raise Exception('The config file does not contain "browser"')
-    elif config["browser"] not in SUPPORTED_BROWSERS:
-        raise Exception(f'"{config["browser"]}" is not a supported browser')
-    return config["browser"]
+def config():
+    """Wczytuje konfigurację testową z pliku config.json."""
+    if not os.path.exists(CONFIG_PATH):
+        pytest.exit(f"❌ Brak pliku konfiguracyjnego: {CONFIG_PATH}")
+    with open(CONFIG_PATH) as f:
+        return json.load(f)
 
 
-@pytest.fixture(scope='session')
-def wait_time_setup(config):
-    return config['wait_time'] if 'wait_time' in config else DEFAULT_WAIT_TIME
-
-
-@pytest.fixture(scope='session')
-def url_setup(config):
-    return config["base_url"] if "base_url" in config else DEFAULT_URL
-
-
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def setup(request, config):
+    """Tworzy instancję przeglądarki zgodnie z ustawieniami z config.json."""
     driver = DriverFactory.get_driver(config)
-    driver.implicitly_wait(config["timeout"])
+    driver.implicitly_wait(config.get("timeout", 10))
     request.cls.driver = driver
+
+    # Dla testów przed błędem — liczba testów, które nie przeszły
     before_failed = request.session.testsfailed
-    if config["browser"] == "firefox":
+
+    # Opcjonalne maksymalizowanie okna
+    if config.get("browser") == "firefox":
         driver.maximize_window()
+
     yield
+
+    # Screenshot w razie błędu
     if request.session.testsfailed != before_failed:
         allure.attach(driver.get_screenshot_as_png(),
-                      name="Test failed", attachment_type=AttachmentType.PNG)
+                      name="Test failed",
+                      attachment_type=AttachmentType.PNG)
     driver.quit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @pytest.fixture(scope="module")
-# def setup(request):
-#     driver = WebDriverSetup.get_driver()
-#     options = Options()
-#     options.add_argument(r'--profile-directory=C:\Users\mazurp2\AppData\Local\Google\Chrome\User Data\Profile 1')
-#     request.cls.driver = driver
-#     yield driver
-#     driver.quit()

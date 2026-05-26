@@ -1,12 +1,13 @@
 import pytest
 import allure
+
+from locators.locators import InternalPages
 from pages.LandingPage import LandingPage
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import InternalPages, HomePageLocators
-
 
 @pytest.mark.usefixtures("setup")
 class TestHomepage:
@@ -151,3 +152,14 @@ class TestHomepage:
         assert box.is_displayed(), "Context menu target box should be visible"
         alert_text = homepage.context_click_the_box()
         assert (alert_text == "You selected a context menu")
+
+
+    @allure.title("Select value from dropdown test")
+    @allure.description("Select value from dropdown")
+    def test_select_dropdown_value_then_verify(self):
+        homepage = LandingPage(self.driver)
+        homepage.open_page()
+        homepage.click_tab('dropdown')
+        homepage.select_value_from_dropdown_by_text(InternalPages.dropdown, 'Option 2')
+        assert homepage.verify_attribute_of_element_exists("//select[@id='dropdown']/option[@value='2']", "selected")
+

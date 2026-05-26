@@ -18,3 +18,4 @@ class InternalPages:
     checkboxes_container = (By.ID, "checkboxes")
     checkboxes = (By.CSS_SELECTOR, "#checkboxes input[type='checkbox']")
     context_box = (By.ID, "hot-spot")
+    dropdown = (By.ID, "dropdown")

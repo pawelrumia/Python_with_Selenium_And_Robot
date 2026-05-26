@@ -16,6 +16,7 @@ This document explains step-by-step how to set up the environment, run tests in 
 - Helper script `run_allure.cmd`
 - Troubleshooting: Allure in venv / PowerShell
 - Additional tips and CI
+- Running Robot Framework tests (English)
 
 ---
 
@@ -217,10 +218,67 @@ setx PATH "%PATH%;C:\Users\Asus\Documents\allure\bin"
 
 ---
 
-## Help / next steps
-If you want, I can:
-- add `run_allure.ps1` (PowerShell-friendly wrapper),
-- add a sample GitHub Actions workflow to generate and publish Allure reports,
-- or modify `activate` so the venv adds Allure to PATH on activation (only if you want this behaviour).
+## Running Robot Framework tests (English)
+A short, practical guide to run Robot Framework tests from the project's virtual environment on Windows.
 
-Tell me which option you prefer and I'll implement and test it.
+Basic steps (cmd.exe):
+
+1. Activate the virtual environment:
+
+```bat
+.\.venv\Scripts\activate
+```
+
+2. Run a single Robot test file and save Robot results to `results` folder:
+
+```bat
+.\.venv\Scripts\python.exe -m robot -d results robot_tests\test_api_robot.robot
+```
+
+3. Run all Robot tests in the `robot_tests` directory:
+
+```bat
+.\.venv\Scripts\python.exe -m robot -d results robot_tests
+```
+
+Alternate: if `robot.bat` is available in the venv scripts, you can run:
+
+```bat
+.\.venv\Scripts\robot.bat -d results robot_tests\test_api_robot.robot
+```
+
+PowerShell examples:
+
+```powershell
+# activate
+.\.venv\Scripts\Activate.ps1
+
+# run a single file
+.\.venv\Scripts\python.exe -m robot -d results robot_tests\test_api_robot.robot
+```
+
+Generating Allure-compatible results from Robot (optional):
+
+- If you want to collect results for Allure, install the adapter and run Robot with the listener:
+
+```powershell
+pip install allure-robotframework
+.\.venv\Scripts\python.exe -m robot --listener allure_robotframework -d allure-results robot_tests
+```
+
+- After tests create `allure-results`, generate and view the report using the Allure CLI (see earlier "Generating an Allure report" section). If Allure CLI is not in PATH, use the full path to your local Allure installation (example):
+
+```bat
+"C:\Users\Asus\Documents\allure\bin\allure.bat" serve allure-results
+```
+
+Notes and troubleshooting
+- If you get "No keyword..." errors, ensure `robotframework-requests` (or other libraries used by your Robot tests) are installed in `.venv`:
+
+```powershell
+.\.venv\Scripts\pip.exe install robotframework-requests
+```
+
+- If `.venv\Scripts\robot.bat` is missing, prefer `python -m robot` as shown above.
+
+---
